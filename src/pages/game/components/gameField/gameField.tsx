@@ -15,8 +15,6 @@ const GameFieldContainer = ({ className, count }) => {
     }
   }
 
-  console.log(field);
-
   return (
     <div className={className}>
       {field.map((column, columnIndex) => (

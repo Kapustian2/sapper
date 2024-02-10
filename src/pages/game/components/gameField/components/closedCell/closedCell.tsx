@@ -2,7 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const ClosedCellContainer = ({ className }) => {
-  return <div className={className}></div>;
+  const handleRightClick = (event) => {
+    event.preventDefault();
+    console.log("123");
+  };
+
+  return <div className={className} onContextMenu={handleRightClick}></div>;
 };
 
 export const ClosedCell = styled(ClosedCellContainer)`

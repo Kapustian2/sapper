@@ -34,9 +34,7 @@ const GameContainer = ({ className }) => {
       <div>
         Время: <Timer minutes={minutes} />
         <ButtonUI onClick={() => navigate(-1)}>Возврат</ButtonUI>
-        <ButtonUI onClick={() => console.log("Перезапуск игры")}>
-          Перезапуск
-        </ButtonUI>
+        <ButtonUI onClick={() => window.location.reload()}>Перезапуск</ButtonUI>
       </div>
       <GameField count={count} />
     </div>
