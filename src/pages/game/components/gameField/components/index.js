@@ -1,2 +1,1 @@
-export * from "./cell/cell.tsx";
-export * from "./closedCell/closedCell.tsx";
+export * from "./Cell/Cell.tsx";

@@ -1,5 +1,5 @@
 import React from "react";
-import { GameField, Timer } from "./components";
+import { GameField, Leaderboard, Statistic, Timer } from "./components";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonUI } from "../../components";
@@ -8,20 +8,23 @@ const GameContainer = ({ className }) => {
   const { difficulty } = useParams();
   const navigate = useNavigate();
 
-  let count, minutes;
+  let dimension, minutes, mines;
 
   switch (difficulty) {
     case "easy":
-      count = [8, 8];
+      dimension = [8, 8];
       minutes = 10;
+      mines = 9;
       break;
     case "middle":
-      count = [16, 16];
+      dimension = [16, 16];
       minutes = 40;
+      mines = 40;
       break;
     case "hard":
-      count = [32, 16];
+      dimension = [32, 16];
       minutes = 100;
+      mines = 77;
       break;
     default:
       break;
@@ -36,13 +39,20 @@ const GameContainer = ({ className }) => {
         <ButtonUI onClick={() => navigate(-1)}>Возврат</ButtonUI>
         <ButtonUI onClick={() => window.location.reload()}>Перезапуск</ButtonUI>
       </div>
-      <GameField count={count} />
+      <div className="row">
+        <Leaderboard />
+        <GameField dimension={dimension} mines={mines} />
+        <Statistic />
+      </div>
     </div>
   );
 };
 
 const StyledGame = styled(GameContainer)`
-  /* Ваши стили */
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const Game = () => <StyledGame />;
