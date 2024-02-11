@@ -48,7 +48,7 @@ const GameContainer = ({ className }) => {
   );
 };
 
-export const StyledGame = styled(GameContainer)`
+export const Game = styled(GameContainer)`
   .row {
     display: flex;
     justify-content: space-between;
