@@ -15,7 +15,7 @@ type CellState = {
 };
 
 export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
-  const field: Array<Array<CellState>> = useMemo(() => {
+  const [field, setField] = useState<Array<Array<CellState>>>(() => {
     const newField: Array<Array<CellState>> = [];
     // инициализируем начальными значениями игровое поле
     for (let i = 0; i < fieldH; i++) {
@@ -76,7 +76,17 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
     }
     console.log(newField);
     return newField;
-  }, [fieldW, fieldH, mines]);
+  });
 
-  return { field };
+  const openCell = ([x, y]: Coord) => {
+    const updatedField = [...field];
+    updatedField[x][y] = {
+      ...updatedField[x][y],
+      isOpen: true,
+    };
+    console.log("123");
+    setField(updatedField);
+  };
+
+  return { field, openCell };
 };

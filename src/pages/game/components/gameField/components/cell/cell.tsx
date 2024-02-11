@@ -5,16 +5,20 @@ interface CellProps {
   className?: string;
   isOpen: boolean;
   children: React.ReactNode;
+  openCell: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const CellContainer = (props: CellProps) => {
   const handleRightClick = (event) => {
     event.preventDefault();
-    console.log("123");
   };
 
   return (
-    <div className={props.className} onContextMenu={handleRightClick}>
+    <div
+      className={props.className}
+      onContextMenu={handleRightClick}
+      onClick={props.openCell}
+    >
       {props.isOpen ? props.children : null}
     </div>
   );
