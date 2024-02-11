@@ -44,6 +44,7 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
         newField[coord[0]][coord[1]].isMined = true;
       }
     }
+    // считаем количество соседних клеток с минами
     for (let i = 0; i < fieldH; i++) {
       for (let j = 0; j < fieldW; j++) {
         let counter = 0;
