@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const LeaderboardContainer = ({ className }) => {
+interface LeaderboadrProps {
+  className?: string;
+}
+
+const LeaderboardContainer = (props: LeaderboadrProps) => {
   return (
-    <div className={className}>
+    <div className={props.className}>
       <div className="title">leaderboard</div>
       <div className="line">
         <span>ИМЯ</span>

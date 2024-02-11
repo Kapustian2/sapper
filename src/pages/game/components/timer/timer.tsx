@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const TimerContainer = ({ className, minutes }) => {
-  const totalSeconds = minutes * 60;
+interface TimerProps {
+  className?: string;
+  minutes: number;
+}
+
+const TimerContainer = (props: TimerProps) => {
+  const totalSeconds = props.minutes * 60;
   const [time, setTime] = useState(totalSeconds);
   const [timeIsEnd, setTimeIsEnd] = useState(false);
 
@@ -27,7 +32,7 @@ const TimerContainer = ({ className, minutes }) => {
   };
 
   return (
-    <div className={className}>
+    <div className={props.className}>
       {timeIsEnd ? "Время вышло" : formatTime(time)}
     </div>
   );

@@ -48,11 +48,9 @@ const GameContainer = ({ className }) => {
   );
 };
 
-const StyledGame = styled(GameContainer)`
+export const StyledGame = styled(GameContainer)`
   .row {
     display: flex;
     justify-content: space-between;
   }
 `;
-
-export const Game = () => <StyledGame />;

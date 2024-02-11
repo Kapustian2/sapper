@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const ButtonUIContainer = ({ className, children, ...props }) => {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+
+  onClick: () => void;
+}
+
+const ButtonUIContainer = (props: ButtonProps) => {
   return (
-    <div className={className} {...props}>
-      <button>
-        <span>{children}</span>
-      </button>
-    </div>
+    <button className={props.className} {...props}>
+      {props.children}
+    </button>
   );
 };
 

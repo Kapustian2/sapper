@@ -3,11 +3,17 @@ import styled from "styled-components";
 import { CellState, useGameField } from "./hooks";
 import { Cell } from "./components";
 
-const GameFieldContainer = ({ className, dimension, mines }) => {
+interface GameFieldProps {
+  className?: string;
+  dimension: [number, number];
+  mines: number;
+}
+
+const GameFieldContainer = (props: GameFieldProps) => {
   const { field, openCell, cycleMark } = useGameField({
-    fieldH: dimension[1],
-    fieldW: dimension[0],
-    mines,
+    fieldH: props.dimension[1],
+    fieldW: props.dimension[0],
+    mines: props.mines,
   });
 
   function cellContent(cell: CellState) {
@@ -22,7 +28,7 @@ const GameFieldContainer = ({ className, dimension, mines }) => {
   }
 
   return (
-    <div className={className}>
+    <div className={props.className}>
       {field.map((column, columnIndex) => (
         <div key={columnIndex} className="column">
           {column.map((cell, cellIndex) => (

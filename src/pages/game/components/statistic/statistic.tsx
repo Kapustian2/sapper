@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const StatisticContainer = ({ className }) => {
-  return <div className={className}>statistic</div>;
+interface StatisticProps {
+  className?: string;
+}
+
+const StatisticContainer = (props: StatisticProps) => {
+  return <div className={props.className}>statistic</div>;
 };
 
 export const Statistic = styled(StatisticContainer)`
