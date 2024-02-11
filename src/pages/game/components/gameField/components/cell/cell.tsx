@@ -14,7 +14,9 @@ const CellContainer = (props: CellProps) => {
   };
 
   return (
-    <div className={props.className} onContextMenu={handleRightClick}></div>
+    <div className={props.className} onContextMenu={handleRightClick}>
+      {props.isOpen ? props.children : null}
+    </div>
   );
 };
 
@@ -24,7 +26,7 @@ export const Cell = styled(CellContainer)`
   border: 2px solid gray;
   background-color: gray;
   ${({ isOpen }) =>
-    isOpen ? `background-color: #b8b8b8` : "background-color: gray"}
+    isOpen ? `background-color: #b8b8b8;` : `background-color: gray;`}
   border-radius: 2px;
   line-height: 20px;
   margin-bottom: 3px;

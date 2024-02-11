@@ -15,7 +15,9 @@ const GameFieldContainer = ({ className, dimension, mines }) => {
       {field.map((column, columnIndex) => (
         <div key={columnIndex} className="column">
           {column.map((cell, cellIndex) => (
-            <Cell key={cellIndex} />
+            <Cell key={cellIndex} isOpen>
+              {cell.isMined ? "💣" : cell.minesAround}
+            </Cell>
           ))}
         </div>
       ))}
