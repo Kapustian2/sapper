@@ -7,9 +7,9 @@ interface IGameFieldParams {
 }
 type Coord = [number, number];
 
-type CellState = {
+export type CellState = {
   isOpen: boolean;
-  isFlaged: boolean;
+  mark: null | "flag" | "question";
   isMined: boolean;
   minesAround: number;
 };
@@ -23,7 +23,7 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
       for (let j = 0; j < fieldW; j++) {
         newField[i][j] = {
           isOpen: false,
-          isFlaged: false,
+          mark: null,
           isMined: false,
           minesAround: 0,
         };
@@ -80,13 +80,29 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
 
   const openCell = ([x, y]: Coord) => {
     const updatedField = [...field];
+    if (updatedField[x][y].mark) return;
+    else {
+      updatedField[x][y] = {
+        ...updatedField[x][y],
+        isOpen: true,
+      };
+      console.log("openCell");
+      setField(updatedField);
+    }
+  };
+
+  const cycleMark = ([x, y]: Coord) => {
+    const updatedField = [...field];
+    const mark = updatedField[x][y].mark;
+    const nextMark =
+      mark === null ? "flag" : mark === "flag" ? "question" : null;
     updatedField[x][y] = {
       ...updatedField[x][y],
-      isOpen: true,
+      mark: nextMark,
     };
-    console.log("123");
+    console.log("cycleMark");
     setField(updatedField);
   };
 
-  return { field, openCell };
+  return { field, openCell, cycleMark };
 };

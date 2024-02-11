@@ -1,14 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { useGameField } from "./hooks";
+import { CellState, useGameField } from "./hooks";
 import { Cell } from "./components";
 
 const GameFieldContainer = ({ className, dimension, mines }) => {
-  const { field, openCell } = useGameField({
+  const { field, openCell, cycleMark } = useGameField({
     fieldH: dimension[1],
     fieldW: dimension[0],
     mines,
   });
+
+  function cellContent(cell: CellState) {
+    if (cell.isOpen) {
+      if (cell.isMined) {
+        return "💣";
+      } else return cell.minesAround;
+    } else {
+      if (cell.mark === "flag") return "🚩";
+      else if (cell.mark === "question") return "❓";
+    }
+  }
 
   return (
     <div className={className}>
@@ -17,10 +28,11 @@ const GameFieldContainer = ({ className, dimension, mines }) => {
           {column.map((cell, cellIndex) => (
             <Cell
               key={cellIndex}
-              openCell={() => openCell([columnIndex, cellIndex])}
-              isOpen={!cell.isOpen}
+              onLeftClick={() => openCell([columnIndex, cellIndex])}
+              onRightClick={() => cycleMark([columnIndex, cellIndex])}
+              isOpen={cell.isOpen}
             >
-              {cell.isMined ? "💣" : cell.minesAround}
+              {cellContent(cell)}
             </Cell>
           ))}
         </div>
