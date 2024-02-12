@@ -17,6 +17,7 @@ type GameField = {
   fieldW: number;
   field: Array<Array<CellState>>;
   minesCount: number;
+  flags: number;
 };
 
 export type OpenCell = { type: "OPEN_CELL"; payload: { coord: Coord } };
@@ -32,7 +33,20 @@ export type StartGame = {
 export type TimerTick = {
   type: "TIMER_TICK";
 };
-export type GameAction = OpenCell | CycleCellMark | StartGame | TimerTick;
+
+export type OnWin = {
+  type: "ON_WIN";
+};
+export type OnLose = {
+  type: "ON_LOSE";
+};
+export type GameAction =
+  | OpenCell
+  | CycleCellMark
+  | StartGame
+  | TimerTick
+  | OnWin
+  | OnLose;
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -64,6 +78,21 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         timer: state.timer - 1,
       };
     }
+    case "ON_WIN": {
+      return {
+        ...state,
+        gameStatus: "end",
+        gameField: onWin(state.gameField),
+      };
+    }
+
+    case "ON_LOSE": {
+      return {
+        ...state,
+        gameStatus: "end",
+        gameField: onLose(state.gameField),
+      };
+    }
 
     default: {
       throw new Error("Ошибка. Неизвестный action");
@@ -72,7 +101,6 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 }
 
 const openCell = (gameField: GameField, [x, y]: Coord): GameField => {
-  console.log(gameField.field);
   const updatedField = [...gameField.field];
 
   if (updatedField[x][y].mark) return gameField;
@@ -131,10 +159,10 @@ const cycleMark = (gameField: GameField, [x, y]: Coord): GameField => {
   let nextMark;
   if (mark === null) {
     nextMark = "flag";
-    gameField.minesCount = gameField.minesCount - 1;
+    gameField.flags = gameField.flags - 1;
   } else if (mark === "flag") {
     nextMark = "question";
-    gameField.minesCount = gameField.minesCount + 1;
+    gameField.flags = gameField.flags + 1;
   } else {
     nextMark = null;
   }
@@ -194,4 +222,34 @@ const startGame = (gameField: GameField, [x, y]: Coord): GameField => {
   }
 
   return { ...gameField, field: newField };
+};
+
+const onLose = (gameField: GameField): GameField => {
+  const newGameField = gameField.field.map((row) => [...row]);
+
+  for (let i = 0; i < gameField.fieldH; i++) {
+    for (let j = 0; j < gameField.fieldW; j++) {
+      if (newGameField[i][j].isMined) {
+        console.log(newGameField[i][j]);
+
+        newGameField[i][j].isOpen = true;
+      }
+    }
+  }
+  return { ...gameField, field: newGameField };
+};
+
+const onWin = (gameField: GameField): GameField => {
+  const newGameField = gameField.field.map((row) => [...row]);
+
+  for (let i = 0; i < gameField.fieldH; i++) {
+    for (let j = 0; j < gameField.fieldW; j++) {
+      if (newGameField[i][j].isMined && !newGameField[i][j].isOpen) {
+        console.log(newGameField[i][j]);
+
+        newGameField[i][j].mark = "flag";
+      }
+    }
+  }
+  return { ...gameField, field: newGameField };
 };

@@ -40,11 +40,13 @@ const GameFieldContainer = (props: GameFieldProps) => {
               onLeftClick={() => {
                 if (game.state.gameStatus === "idle")
                   startGame(game.dispatch, [columnIndex, cellIndex]);
-                openCell(game.dispatch, [columnIndex, cellIndex]);
+                if (game.state.gameStatus !== "end")
+                  openCell(game.dispatch, [columnIndex, cellIndex]);
               }}
-              onRightClick={() =>
-                cycleCellMark(game.dispatch, [columnIndex, cellIndex])
-              }
+              onRightClick={() => {
+                if (game.state.gameStatus !== "end")
+                  cycleCellMark(game.dispatch, [columnIndex, cellIndex]);
+              }}
               isOpen={cell.isOpen}
             >
               {cellContent(cell)}

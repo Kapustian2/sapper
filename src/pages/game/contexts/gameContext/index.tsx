@@ -17,6 +17,10 @@ import {
 import { cycleCellMark } from "./actions/CycleCellMark.ts";
 import { openCell } from "./actions/openCell.ts";
 import { startGame } from "./actions/startGame.ts";
+import { checkWinCondition } from "./helpers/checkWinCondition.ts";
+import { checkLoseCondition } from "./helpers/checkLoseCondition.ts";
+import { onLose } from "./actions/afterLose.ts";
+import { onWin } from "./actions/afterWin.ts";
 
 const GameContext = createContext<{
   state: GameState;
@@ -36,7 +40,7 @@ const GameProvider = (props: GameProviderProps) => {
     case "easy":
       dimension = [8, 8];
       seconds = 10 * 60;
-      mines = 9;
+      mines = 1;
       break;
     case "middle":
       dimension = [16, 16];
@@ -59,6 +63,8 @@ const GameProvider = (props: GameProviderProps) => {
     seconds
   );
   const [state, dispatch] = useReducer(gameReducer, initialState);
+
+  //Запускает таймер, когда статус игры меняется на playing
   useEffect(() => {
     let intervalId;
 
@@ -72,6 +78,27 @@ const GameProvider = (props: GameProviderProps) => {
       clearInterval(intervalId);
     };
   }, [state.gameStatus]);
+  //Меняет статус игры на end когда таймер заканчивается
+  useEffect(() => {
+    if (state.timer === 0) state.gameStatus = "end";
+  }, [state.timer]);
+
+  //Проверяет выполнения условия победы после каждого изменения поля
+  useEffect(() => {
+    if (state.gameStatus !== "end")
+      if (checkWinCondition(state)) {
+        onWin(dispatch);
+      }
+  }, [state.gameField.field]);
+
+  //Проверяет выполнения условия поражения после каждого изменения поля
+  useEffect(() => {
+    if (state.gameStatus !== "end")
+      if (checkLoseCondition(state)) {
+        onLose(dispatch);
+      }
+  }, [state.gameField.field]);
+
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (
     <GameContext.Provider value={value}>{props.children}</GameContext.Provider>
@@ -102,7 +129,7 @@ const createInitialState = (
   }
 
   return {
-    gameField: { fieldH, fieldW, field, minesCount: mines },
+    gameField: { fieldH, fieldW, field, minesCount: mines, flags: mines },
     timer: minutes,
     gameStatus: "idle",
   };
