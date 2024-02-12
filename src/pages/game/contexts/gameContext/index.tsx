@@ -5,6 +5,7 @@ import React, {
   type Dispatch,
   type PropsWithChildren,
   useMemo,
+  useEffect,
 } from "react";
 import {
   gameReducer,
@@ -29,22 +30,22 @@ interface GameProviderProps extends PropsWithChildren {
 }
 
 const GameProvider = (props: GameProviderProps) => {
-  let dimension, minutes, mines;
+  let dimension, seconds, mines;
 
   switch (props.gameSettings.difficulty) {
     case "easy":
       dimension = [8, 8];
-      minutes = 10;
+      seconds = 10 * 60;
       mines = 9;
       break;
     case "middle":
       dimension = [16, 16];
-      minutes = 40;
+      seconds = 40 * 60;
       mines = 40;
       break;
     case "hard":
       dimension = [32, 16];
-      minutes = 100;
+      seconds = 100 * 60;
       mines = 77;
       break;
     default:
@@ -55,9 +56,22 @@ const GameProvider = (props: GameProviderProps) => {
     dimension[0],
     dimension[1],
     mines,
-    minutes
+    seconds
   );
   const [state, dispatch] = useReducer(gameReducer, initialState);
+  useEffect(() => {
+    let intervalId;
+
+    if (state.gameStatus === "playing") {
+      intervalId = setInterval(() => {
+        dispatch({ type: "TIMER_TICK" });
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [state.gameStatus]);
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   return (
     <GameContext.Provider value={value}>{props.children}</GameContext.Provider>
@@ -65,7 +79,6 @@ const GameProvider = (props: GameProviderProps) => {
 };
 
 // заполняет поля минами и считает количество соседних мин
-const setupMines = () => {};
 
 const createInitialState = (
   fieldH: number,

@@ -2,7 +2,7 @@ type GameStatus = "idle" | "playing" | "end";
 export interface GameState {
   gameField: GameField;
   gameStatus: GameStatus;
-  timer: number;
+  timer: number; // timer в секундах
 }
 
 export type Coord = [number, number];
@@ -28,7 +28,11 @@ export type StartGame = {
   type: "START_GAME";
   payload: { coord: Coord };
 };
-export type GameAction = OpenCell | CycleCellMark | StartGame;
+
+export type TimerTick = {
+  type: "TIMER_TICK";
+};
+export type GameAction = OpenCell | CycleCellMark | StartGame | TimerTick;
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -51,6 +55,13 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         ...state,
         gameField: startGame(state.gameField, action.payload.coord),
         gameStatus: "playing",
+      };
+    }
+
+    case "TIMER_TICK": {
+      return {
+        ...state,
+        timer: state.timer - 1,
       };
     }
 
