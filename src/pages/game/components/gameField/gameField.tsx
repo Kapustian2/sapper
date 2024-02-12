@@ -5,6 +5,7 @@ import {
   type CellState,
   openCell,
   cycleCellMark,
+  startGame,
 } from "../../contexts/gameContext/index.tsx";
 import { Cell } from "./components";
 
@@ -36,9 +37,11 @@ const GameFieldContainer = (props: GameFieldProps) => {
           {column.map((cell, cellIndex) => (
             <Cell
               key={cellIndex}
-              onLeftClick={() =>
-                openCell(game.dispatch, [columnIndex, cellIndex])
-              }
+              onLeftClick={() => {
+                if (game.state.gameStatus === "idle")
+                  startGame(game.dispatch, [columnIndex, cellIndex]);
+                openCell(game.dispatch, [columnIndex, cellIndex]);
+              }}
               onRightClick={() =>
                 cycleCellMark(game.dispatch, [columnIndex, cellIndex])
               }

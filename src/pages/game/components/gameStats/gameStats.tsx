@@ -17,8 +17,9 @@ const GameStatsContainer = (props: GameStatsProps) => {
       <div className="title">statistic</div>
       <div className="mines-count">
         <span>Количество флагов</span>
-        <span>{game.state.gameField.flagsCounter}</span>
+        <span>{game.state.gameField.minesCount}</span>
       </div>
+      <span>{game.state.gameStatus}</span>
       <Timer />
     </div>
   );
