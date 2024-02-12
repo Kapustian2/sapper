@@ -78,6 +78,8 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
     return newField;
   });
 
+  // логика открытия ячейки
+
   const openCell = ([x, y]: Coord) => {
     const updatedField = [...field];
     if (updatedField[x][y].mark) return;
@@ -88,8 +90,49 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
       };
       console.log("openCell");
       setField(updatedField);
+
+      if (updatedField[x][y].minesAround === 0) {
+        const directions = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [0, -1],
+          [0, 1],
+          [1, -1],
+          [1, 0],
+          [1, 1],
+        ];
+
+        // логика открытия нулей по цепочке
+        const openAdjacentCells = ([x, y]: Coord) => {
+          for (const dir of directions) {
+            const adjacent: Coord = [x + dir[0], y + dir[1]];
+            if (
+              adjacent[0] >= 0 &&
+              adjacent[0] < fieldH &&
+              adjacent[1] >= 0 &&
+              adjacent[1] < fieldW &&
+              !updatedField[adjacent[0]][adjacent[1]].isOpen &&
+              !updatedField[adjacent[0]][adjacent[1]].isMined
+            ) {
+              updatedField[adjacent[0]][adjacent[1]] = {
+                ...updatedField[adjacent[0]][adjacent[1]],
+                isOpen: true,
+              };
+              setField(updatedField);
+              if (updatedField[adjacent[0]][adjacent[1]].minesAround === 0) {
+                openAdjacentCells(adjacent);
+              }
+            }
+          }
+        };
+
+        openAdjacentCells([x, y]);
+      }
     }
   };
+
+  // логика "маркировки" ячейки
 
   const cycleMark = ([x, y]: Coord) => {
     const updatedField = [...field];
