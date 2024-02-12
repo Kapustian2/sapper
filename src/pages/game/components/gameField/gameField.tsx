@@ -1,16 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { useGame, type CellState } from "../../contexts/gameContext/index.tsx";
+import {
+  useGame,
+  type CellState,
+  openCell,
+  cycleCellMark,
+} from "../../contexts/gameContext/index.tsx";
 import { Cell } from "./components";
 
 interface GameFieldProps {
   className?: string;
-  dimension: [number, number];
-  mines: number;
 }
 
 const GameFieldContainer = (props: GameFieldProps) => {
   const game = useGame();
+  if (!game) {
+    throw new Error("GameContext недоступен");
+  }
 
   function cellContent(cell: CellState) {
     if (cell.isOpen) {
@@ -25,22 +31,16 @@ const GameFieldContainer = (props: GameFieldProps) => {
 
   return (
     <div className={props.className}>
-      {game?.state.gameField.field.map((column, columnIndex) => (
+      {game.state.gameField.field.map((column, columnIndex) => (
         <div key={columnIndex} className="column">
           {column.map((cell, cellIndex) => (
             <Cell
               key={cellIndex}
               onLeftClick={() =>
-                game.dispatch({
-                  type: "OPEN_CELL",
-                  payload: { coord: [columnIndex, cellIndex] },
-                })
+                openCell(game.dispatch, [columnIndex, cellIndex])
               }
               onRightClick={() =>
-                game.dispatch({
-                  type: "CYCLE_CELL_MARK",
-                  payload: { coord: [columnIndex, cellIndex] },
-                })
+                cycleCellMark(game.dispatch, [columnIndex, cellIndex])
               }
               isOpen={cell.isOpen}
             >

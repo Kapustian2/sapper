@@ -14,6 +14,7 @@ type GameField = {
   fieldH: number;
   fieldW: number;
   field: Array<Array<CellState>>;
+  flagsCounter: number;
 };
 
 export type OpenCell = { type: "OPEN_CELL"; payload: { coord: Coord } };
@@ -100,10 +101,18 @@ const cycleMark = (gameField: GameField, [x, y]: Coord): GameField => {
   const updatedField = [...gameField.field];
   const mark = updatedField[x][y].mark;
 
-  const nextMark = mark === null ? "flag" : mark === "flag" ? "question" : null;
-  updatedField[x][y] = {
-    ...updatedField[x][y],
-    mark: nextMark,
-  };
+  let nextMark;
+  if (mark === null) {
+    nextMark = "flag";
+    gameField.flagsCounter = gameField.flagsCounter - 1;
+  } else if (mark === "flag") {
+    nextMark = "question";
+    gameField.flagsCounter = gameField.flagsCounter + 1;
+  } else {
+    nextMark = null;
+  }
+
+  updatedField[x][y] = { ...updatedField[x][y], mark: nextMark };
+
   return { ...gameField, field: updatedField };
 };

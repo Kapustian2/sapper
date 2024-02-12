@@ -1,25 +1,30 @@
 import React from "react";
 import styled from "styled-components";
+import { useGame } from "../../contexts/gameContext/index.tsx";
+import { Timer } from "../timer/timer.tsx";
 
-interface StatisticProps {
+interface GameStatsProps {
   className?: string;
-  flags: number;
 }
 
-const StatisticContainer = (props: StatisticProps) => {
+const GameStatsContainer = (props: GameStatsProps) => {
+  const game = useGame();
+  if (!game) {
+    throw new Error("GameContext недоступен");
+  }
   return (
     <div className={props.className}>
       <div className="title">statistic</div>
       <div className="mines-count">
-        <span>Количество мин</span>
-        <span>{props.flags}</span>
+        <span>Количество флагов</span>
+        <span>{game.state.gameField.flagsCounter}</span>
       </div>
+      <Timer />
     </div>
   );
 };
 
-export const Statistic = styled(StatisticContainer)`
-  margin-right: 30px;
+export const GameStats = styled(GameStatsContainer)`
   width: 200px;
   border: 2px solid black;
   border-radius: 10px;
