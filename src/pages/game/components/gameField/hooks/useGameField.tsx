@@ -91,6 +91,7 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
       console.log("openCell");
       setField(updatedField);
 
+      // логика открытия нулей по цепочке
       if (updatedField[x][y].minesAround === 0) {
         const directions = [
           [-1, -1],
@@ -103,7 +104,6 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
           [1, 1],
         ];
 
-        // логика открытия нулей по цепочке
         const openAdjacentCells = ([x, y]: Coord) => {
           for (const dir of directions) {
             const adjacent: Coord = [x + dir[0], y + dir[1]];
@@ -113,7 +113,8 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
               adjacent[1] >= 0 &&
               adjacent[1] < fieldW &&
               !updatedField[adjacent[0]][adjacent[1]].isOpen &&
-              !updatedField[adjacent[0]][adjacent[1]].isMined
+              !updatedField[adjacent[0]][adjacent[1]].isMined &&
+              !updatedField[adjacent[0]][adjacent[1]].mark
             ) {
               updatedField[adjacent[0]][adjacent[1]] = {
                 ...updatedField[adjacent[0]][adjacent[1]],
@@ -137,13 +138,13 @@ export const useGameField = ({ fieldW, fieldH, mines }: IGameFieldParams) => {
   const cycleMark = ([x, y]: Coord) => {
     const updatedField = [...field];
     const mark = updatedField[x][y].mark;
+
     const nextMark =
       mark === null ? "flag" : mark === "flag" ? "question" : null;
     updatedField[x][y] = {
       ...updatedField[x][y],
       mark: nextMark,
     };
-    console.log("cycleMark");
     setField(updatedField);
   };
 
