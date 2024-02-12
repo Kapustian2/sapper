@@ -3,6 +3,7 @@ import { GameField, Leaderboard, Statistic, Timer } from "./components";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonUI } from "../../components";
+import { GameProvider } from "./contexts/gameContext/index.tsx";
 
 const GameContainer = ({ className }) => {
   const { difficulty } = useParams();
@@ -31,20 +32,24 @@ const GameContainer = ({ className }) => {
   }
 
   return (
-    <div className={className}>
-      <div>Сложность:</div>
-      <div> {difficulty}</div>
-      <div>
-        Время: <Timer minutes={minutes} />
-        <ButtonUI onClick={() => navigate(-1)}>Возврат</ButtonUI>
-        <ButtonUI onClick={() => window.location.reload()}>Перезапуск</ButtonUI>
+    <GameProvider>
+      <div className={className}>
+        <div>Сложность:</div>
+        <div> {difficulty}</div>
+        <div>
+          Время: <Timer minutes={minutes} />
+          <ButtonUI onClick={() => navigate(-1)}>Возврат</ButtonUI>
+          <ButtonUI onClick={() => window.location.reload()}>
+            Перезапуск
+          </ButtonUI>
+        </div>
+        <div className="row">
+          <Leaderboard />
+          <GameField dimension={dimension} mines={mines} />
+          <Statistic flags={mines} />
+        </div>
       </div>
-      <div className="row">
-        <Leaderboard />
-        <GameField dimension={dimension} mines={mines} />
-        <Statistic />
-      </div>
-    </div>
+    </GameProvider>
   );
 };
 

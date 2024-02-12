@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { CellState, useGameField } from "./hooks";
+import { useGame, type CellState } from "../../contexts/gameContext/index.tsx";
 import { Cell } from "./components";
 
 interface GameFieldProps {
@@ -10,11 +10,7 @@ interface GameFieldProps {
 }
 
 const GameFieldContainer = (props: GameFieldProps) => {
-  const { field, openCell, cycleMark } = useGameField({
-    fieldH: props.dimension[1],
-    fieldW: props.dimension[0],
-    mines: props.mines,
-  });
+  const game = useGame();
 
   function cellContent(cell: CellState) {
     if (cell.isOpen) {
@@ -29,13 +25,23 @@ const GameFieldContainer = (props: GameFieldProps) => {
 
   return (
     <div className={props.className}>
-      {field.map((column, columnIndex) => (
+      {game?.state.gameField.field.map((column, columnIndex) => (
         <div key={columnIndex} className="column">
           {column.map((cell, cellIndex) => (
             <Cell
               key={cellIndex}
-              onLeftClick={() => openCell([columnIndex, cellIndex])}
-              onRightClick={() => cycleMark([columnIndex, cellIndex])}
+              onLeftClick={() =>
+                game.dispatch({
+                  type: "OPEN_CELL",
+                  payload: { coord: [columnIndex, cellIndex] },
+                })
+              }
+              onRightClick={() =>
+                game.dispatch({
+                  type: "CYCLE_CELL_MARK",
+                  payload: { coord: [columnIndex, cellIndex] },
+                })
+              }
               isOpen={cell.isOpen}
             >
               {cellContent(cell)}

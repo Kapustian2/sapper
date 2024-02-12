@@ -3,10 +3,19 @@ import styled from "styled-components";
 
 interface StatisticProps {
   className?: string;
+  flags: number;
 }
 
 const StatisticContainer = (props: StatisticProps) => {
-  return <div className={props.className}>statistic</div>;
+  return (
+    <div className={props.className}>
+      <div className="title">statistic</div>
+      <div className="mines-count">
+        <span>Количество мин</span>
+        <span>{props.flags}</span>
+      </div>
+    </div>
+  );
 };
 
 export const Statistic = styled(StatisticContainer)`
@@ -15,4 +24,14 @@ export const Statistic = styled(StatisticContainer)`
   border: 2px solid black;
   border-radius: 10px;
   padding: 10px;
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .mines-count {
+    display: flex;
+    justify-content: space-around;
+  }
 `;
