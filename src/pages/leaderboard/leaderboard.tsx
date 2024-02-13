@@ -10,32 +10,49 @@ interface LeaderboadrProps {
 const LeaderboardContainer = (props: LeaderboadrProps) => {
   const leaderboard = useSelector(selectRecord);
 
+  // Функция для фильтрации и сортировки записей по сложности и времени
+  const getSortedRecords = (difficulty: string) => {
+    return leaderboard
+      .filter((record) => record.difficulty === difficulty)
+      .sort((a, b) => b.time - a.time)
+      .slice(0, 10);
+  };
+
   return (
     <div className={props.className}>
       <div className="title">leaderboard</div>
+
       <div className="card">
         <div className="title">easy</div>
-        <div className="line">
-          <span>{leaderboard.time}</span>
-          <span>-</span>
-          <span>ОЧКИ</span>
-        </div>
+        {getSortedRecords("easy").map((record, index) => (
+          <div className="line" key={index}>
+            <span>{record.name}</span>
+            <span>-</span>
+            <span>{record.time}</span>
+          </div>
+        ))}
       </div>
+
       <div className="card">
         <div className="title">middle</div>
-        <div className="line">
-          <span>ИМЯ</span>
-          <span>-</span>
-          <span>ОЧКИ</span>
-        </div>
+        {getSortedRecords("middle").map((record, index) => (
+          <div className="line" key={index}>
+            <span>{record.name}</span>
+            <span>-</span>
+            <span>{record.time}</span>
+          </div>
+        ))}
       </div>
+
       <div className="card">
         <div className="title">hard</div>
-        <div className="line">
-          <span>ИМЯ</span>
-          <span>-</span>
-          <span>ОЧКИ</span>
-        </div>
+        {getSortedRecords("hard").map((record, index) => (
+          <div className="line" key={index}>
+            <span>{record.name}</span>
+            <span>-</span>
+            <span>{record.time}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
