@@ -3,6 +3,7 @@ export interface GameState {
   gameField: GameField;
   gameStatus: GameStatus;
   timer: number; // timer в секундах
+  gameResult: "win" | "lose" | undefined;
 }
 
 export type Coord = [number, number];
@@ -82,6 +83,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...state,
         gameStatus: "end",
+        gameResult: "win",
         gameField: onWin(state.gameField),
       };
     }
@@ -90,6 +92,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...state,
         gameStatus: "end",
+        gameResult: "lose",
         gameField: onLose(state.gameField),
       };
     }

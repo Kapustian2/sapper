@@ -1,1 +1,2 @@
-export * from "./recordReducer.ts";
+export * from "./recordReducer.js";
+export * from "./leaderboardReducer.js";

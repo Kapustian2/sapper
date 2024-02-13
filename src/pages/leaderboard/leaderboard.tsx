@@ -8,7 +8,7 @@ interface LeaderboadrProps {
 }
 
 const LeaderboardContainer = (props: LeaderboadrProps) => {
-  const record = useSelector(selectRecord);
+  const leaderboard = useSelector(selectRecord);
 
   return (
     <div className={props.className}>
@@ -16,7 +16,7 @@ const LeaderboardContainer = (props: LeaderboadrProps) => {
       <div className="card">
         <div className="title">easy</div>
         <div className="line">
-          <span>{record.name}</span>
+          <span>{leaderboard.time}</span>
           <span>-</span>
           <span>ОЧКИ</span>
         </div>

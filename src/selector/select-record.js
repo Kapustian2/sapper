@@ -1,1 +1,1 @@
-export const selectRecord = ({ record }) => record;
+export const selectRecord = ({ leaderboard }) => leaderboard;

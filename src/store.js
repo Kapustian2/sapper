@@ -2,9 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { thunk } from "redux-thunk";
 import { compose } from "redux";
 import { recordReducer } from "./reducers/recordReducer";
+import { leaderboardReducer } from "./reducers";
 
 const rootReducer = combineReducers({
   record: recordReducer,
+  leaderboard: leaderboardReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -12,9 +14,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // Функция сохранения состояния в localStorage
 const saveState = (state) => {
   try {
-    const arr = JSON.parse(localStorage.getItem("reduxState") ?? "[]");
-    arr.push(state);
-    localStorage.setItem("reduxState", JSON.stringify(arr));
+    localStorage.setItem("reduxState", JSON.stringify(state));
   } catch (error) {
     console.error("Ошибка сохранения состояния в localStorage:", error);
   }

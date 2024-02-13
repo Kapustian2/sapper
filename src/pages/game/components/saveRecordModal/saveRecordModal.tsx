@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { ButtonUI } from "../../../../components/index.js";
 import { useDispatch } from "react-redux";
 import { setRecord } from "../../../../actions/setRecord.js";
-import { setName } from "../../../../actions/setName.js";
 import { useParams } from "react-router-dom";
+import { setLeaderboardRecord } from "../../../../actions/setLeaderboardRecord.js";
 
 const SaveRecordModalContainer = ({ className }) => {
   const game = useGame();
@@ -19,11 +19,23 @@ const SaveRecordModalContainer = ({ className }) => {
   const [show, setShow] = useState(false);
   const [username, setUsername] = useState("");
   useEffect(() => {
-    if (game.state.gameStatus === "end") setShow(true);
-  }, [game.state.gameStatus]);
+    if (game.state.gameResult === "win") setShow(true);
+  }, [game.state.gameResult]);
 
   const handleSubmit = () => {
     dispatch(setRecord(difficulty, game.state.timer, username));
+    dispatch(
+      setLeaderboardRecord({
+        difficulty,
+        time: game.state.timer,
+        name: username,
+      })
+    );
+    setShow(false);
+  };
+
+  const handleAbort = () => {
+    setShow(false);
   };
 
   return (
@@ -31,18 +43,15 @@ const SaveRecordModalContainer = ({ className }) => {
       <div className={className}>
         <div className="modal-window">
           <div className="modal-content">
-            <label htmlFor="username">
-              Введите имя для отправки результата
-            </label>
+            <label>Введите имя для отправки результата</label>
             <input
               name="username"
               value={username}
               autoComplete="false"
               onChange={(e) => setUsername(e.target.value)}
             />
-            <ButtonUI onClick={handleSubmit} type="submit">
-              Отправить
-            </ButtonUI>
+            <ButtonUI onClick={handleSubmit}>Отправить</ButtonUI>
+            <ButtonUI onClick={handleAbort}>Отменить</ButtonUI>
             <div></div>
           </div>
         </div>
