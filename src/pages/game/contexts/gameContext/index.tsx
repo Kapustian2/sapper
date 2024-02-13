@@ -21,6 +21,8 @@ import { checkWinCondition } from "./helpers/checkWinCondition.ts";
 import { checkLoseCondition } from "./helpers/checkLoseCondition.ts";
 import { onLose } from "./actions/afterLose.ts";
 import { onWin } from "./actions/afterWin.ts";
+import { setRecord } from "../../../../actions/setRecord.js";
+import { useDispatch } from "react-redux";
 
 const GameContext = createContext<{
   state: GameState;
@@ -40,7 +42,7 @@ const GameProvider = (props: GameProviderProps) => {
     case "easy":
       dimension = [8, 8];
       seconds = 10 * 60;
-      mines = 9;
+      mines = 1;
       break;
     case "middle":
       dimension = [16, 16];

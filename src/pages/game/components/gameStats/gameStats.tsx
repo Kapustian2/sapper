@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useGame } from "../../contexts/gameContext/index.tsx";
 import { Timer } from "../timer/timer.tsx";
+import { useDispatch } from "react-redux";
 
 interface GameStatsProps {
   className?: string;
@@ -15,6 +16,7 @@ const GameStatsContainer = (props: GameStatsProps) => {
   return (
     <div className={props.className}>
       <div className="title">statistic</div>
+      <span>Введите имя</span>
       <div className="mines-count">
         <span>Количество флагов</span>
         <span>{game.state.gameField.flags}</span>

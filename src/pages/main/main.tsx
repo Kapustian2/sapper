@@ -18,6 +18,11 @@ const MainContainer = ({ className }) => {
         <Link to={`/game/${"hard"}`}>
           <ButtonUI onClick={() => console.log("hi")}>{"сложная"}</ButtonUI>
         </Link>
+        <Link to={`/leaderboard`}>
+          <ButtonUI onClick={() => console.log("hi")}>
+            {"Таблица лидеров"}
+          </ButtonUI>
+        </Link>
       </div>
     </div>
   );

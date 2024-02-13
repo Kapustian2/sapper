@@ -1,5 +1,5 @@
 import React from "react";
-import { GameField, GameStats } from "./components";
+import { GameField, GameStats, SaveRecordModal } from "./components";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonUI } from "../../components";
@@ -25,6 +25,7 @@ const GameContainer = ({ className }) => {
           <GameField />
           <GameStats />
         </div>
+        <SaveRecordModal />
       </div>
     </GameProvider>
   );
