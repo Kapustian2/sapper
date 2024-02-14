@@ -27,6 +27,8 @@ const MainContainer = ({ className }) => {
       </Link>
       <img src={bomb} alt="Bomb" className="bomb1" />
       <img src={bomb} alt="Bomb" className="bomb2" />
+      <img src={bomb} alt="Bomb" className="bomb3" />
+      <img src={bomb} alt="Bomb" className="bomb4" />
     </div>
   );
 };
@@ -77,6 +79,22 @@ export const Main = styled(MainContainer)`
     left: calc(100vw - 15%);
     animation: bomb2-float 11s ease-in-out infinite;
   }
+  .bomb3 {
+    z-index: -1;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: calc(100vw - 25%);
+    animation: bomb3-float 10s ease-in-out infinite;
+  }
+  .bomb4 {
+    z-index: -1;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    right: calc(100vw - 25%);
+    animation: bomb4-float 9s ease-in-out infinite;
+  }
 
   @keyframes bomb1-float {
     0% {
@@ -98,6 +116,28 @@ export const Main = styled(MainContainer)`
     }
     100% {
       bottom: 213px;
+    }
+  }
+  @keyframes bomb3-float {
+    0% {
+      top: 163px;
+    }
+    50% {
+      top: 120px;
+    }
+    100% {
+      top: 163px;
+    }
+  }
+  @keyframes bomb4-float {
+    0% {
+      bottom: 163px;
+    }
+    50% {
+      bottom: 120px;
+    }
+    100% {
+      bottom: 163px;
     }
   }
 `;

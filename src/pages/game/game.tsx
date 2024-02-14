@@ -40,9 +40,9 @@ const GameContainer = ({ className }) => {
           </ButtonUI>
         </div>
         <div className="row">
-          <GameField />
+          <GameField className="gameField" />
+          <GameStats />
         </div>
-        <GameStats className="statistic" />
         <SaveRecordModal />
       </div>
     </GameProvider>
@@ -72,6 +72,11 @@ export const Game = styled(GameContainer)`
   .row {
     display: flex;
     justify-content: space-around;
+    width: 100%;
+    max-width: 1024px;
+    .gameField {
+      flex: 1 1 0%;
+    }
   }
 
   .image {

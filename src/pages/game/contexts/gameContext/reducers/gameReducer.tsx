@@ -233,8 +233,6 @@ const onLose = (gameField: GameField): GameField => {
   for (let i = 0; i < gameField.fieldH; i++) {
     for (let j = 0; j < gameField.fieldW; j++) {
       if (newGameField[i][j].isMined) {
-        console.log(newGameField[i][j]);
-
         newGameField[i][j].isOpen = true;
       }
     }
@@ -248,8 +246,6 @@ const onWin = (gameField: GameField): GameField => {
   for (let i = 0; i < gameField.fieldH; i++) {
     for (let j = 0; j < gameField.fieldW; j++) {
       if (newGameField[i][j].isMined && !newGameField[i][j].isOpen) {
-        console.log(newGameField[i][j]);
-
         newGameField[i][j].mark = "flag";
       }
     }

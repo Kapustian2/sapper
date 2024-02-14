@@ -47,12 +47,12 @@ const GameProvider = (props: GameProviderProps) => {
     case "middle":
       dimension = [16, 16];
       seconds = 40 * 60;
-      mines = 40;
+      mines = 1;
       break;
     case "hard":
       dimension = [32, 16];
       seconds = 100 * 60;
-      mines = 77;
+      mines = 1;
       break;
     default:
       break;

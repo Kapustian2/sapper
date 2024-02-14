@@ -17,7 +17,7 @@ const SaveRecordModalContainer = ({ className }) => {
 
   const dispatch = useDispatch();
 
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [username, setUsername] = useState("");
   useEffect(() => {
     if (game.state.gameResult === "win") setShow(true);

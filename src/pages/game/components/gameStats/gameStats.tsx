@@ -43,7 +43,6 @@ const GameStatsContainer = (props: GameStatsProps) => {
 };
 
 export const GameStats = styled(GameStatsContainer)`
-  position: absolute;
   width: 373px;
   height: 520px;
   padding: 23px 0;
