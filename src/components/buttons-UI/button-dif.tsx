@@ -19,6 +19,7 @@ export const ButtonDif = styled(ButtonDifContainer)`
   width: 170px;
   padding: 12px 32px;
   justify-content: center;
+  border: 2px solid black;
   color: ${({ children }) => {
     switch (children) {
       case "Легкая":

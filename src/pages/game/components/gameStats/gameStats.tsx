@@ -13,32 +13,61 @@ const GameStatsContainer = (props: GameStatsProps) => {
   if (!game) {
     throw new Error("GameContext недоступен");
   }
+
+  let statusGame;
+  if (game.state.gameStatus === "playing") {
+    statusGame = "Игра идёт";
+  } else if (game.state.gameStatus === "idle") {
+    statusGame = "Игра ожидает начала";
+  } else {
+    statusGame = "Игра закончилась";
+  }
   return (
     <div className={props.className}>
-      <div className="title">statistic</div>
-      <span>Введите имя</span>
-      <div className="mines-count">
-        <span>Количество флагов</span>
-        <span>{game.state.gameField.flags}</span>
+      <div className="card">
+        <div className="title">Статистика</div>
+        <div className="row">
+          <span>Осталось флагов : </span>
+          <span>{game.state.gameField.flags}</span>
+        </div>
+        <div className="row">
+          <span>{statusGame}</span>
+        </div>
+        <div className="row">
+          <span>Осталось времени :</span>
+          <Timer />
+        </div>
       </div>
-      <span>{game.state.gameStatus}</span>
-      <Timer />
     </div>
   );
 };
 
 export const GameStats = styled(GameStatsContainer)`
-  width: 200px;
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 10px;
+  position: absolute;
+  width: 373px;
+  height: 520px;
+  padding: 23px 0;
+  background-image: repeating-conic-gradient(#a0a0a0 0% 25%, #ffffff 0% 50%);
+  background-position: 0 0, 10px 10px;
+  background-size: 8px 8px;
+  background-color: #ffffff;
 
-  .title {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 18px;
+
+  .card {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    background-color: white;
   }
 
-  .mines-count {
+  .title {
+    font-size: 36px;
+  }
+
+  .row {
     display: flex;
     justify-content: space-around;
   }

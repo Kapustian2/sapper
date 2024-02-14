@@ -5,6 +5,7 @@ import { Game, Leaderboard, Main } from "./pages/";
 function App() {
   return (
     <div className="App">
+      <div className="title">САПЁР</div>
       <Routes>
         <Route path="/" element={<Main />} />
         {/* <Route path="/game" element={<Game />} /> */}

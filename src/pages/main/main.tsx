@@ -3,11 +3,11 @@ import { ButtonDif } from "../../components";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ButtonUI } from "../../components/buttons-UI";
+import bomb from "../../assets/images/bomb.png";
 
 const MainContainer = ({ className }) => {
   return (
     <div className={className}>
-      <div className="title">САПЁР</div>
       <div className="choise-dif">Выберите сложность</div>
       <div className="card">
         <div className="buttons">
@@ -25,8 +25,8 @@ const MainContainer = ({ className }) => {
       <Link to={`/leaderboard`} className="button-to-leaderboard">
         <ButtonUI>{"Таблица лидеров"}</ButtonUI>
       </Link>
-      <img src={"images/bomb.png"} alt="Bomb" className="bomb1" />
-      <img src={"images/bomb.png"} alt="Bomb" className="bomb2" />
+      <img src={bomb} alt="Bomb" className="bomb1" />
+      <img src={bomb} alt="Bomb" className="bomb2" />
     </div>
   );
 };
@@ -35,11 +35,6 @@ export const Main = styled(MainContainer)`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .title {
-    font-size: 96px;
-    margin-top: 32px;
-  }
 
   .choise-dif {
     font-size: 40px;

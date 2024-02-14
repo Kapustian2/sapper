@@ -4,27 +4,45 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonDif } from "../../components";
 import { GameProvider } from "./contexts/gameContext/index.tsx";
+import arrow from "../../assets/images/back-arrow.png";
+import { ButtonUI } from "../../components/buttons-UI/button-ui.tsx";
 
 const GameContainer = ({ className }) => {
   let { difficulty } = useParams();
   if (!difficulty) difficulty = "easy";
   const navigate = useNavigate();
 
+  let dif;
+  if (difficulty === "easy") {
+    dif = "Легкая";
+  } else if (difficulty === "middle") {
+    dif = "Средняя";
+  } else {
+    dif = "Сложная";
+  }
+
   return (
     <GameProvider gameSettings={{ difficulty }}>
       <div className={className}>
-        <div>Сложность:</div>
-        <div> {difficulty}</div>
-        <div>
-          <ButtonDif onClick={() => navigate(-1)}>Возврат</ButtonDif>
-          <ButtonDif onClick={() => window.location.reload()}>
+        <div className="dif">
+          <span className="disc">Сложность:</span>
+          <span className="difficult"> {dif}</span>
+        </div>
+        <div className="navigate">
+          <img
+            src={arrow}
+            alt="back-arrow"
+            onClick={() => navigate(-1)}
+            className="image"
+          />
+          <ButtonUI onClick={() => window.location.reload()}>
             Перезапуск
-          </ButtonDif>
+          </ButtonUI>
         </div>
         <div className="row">
           <GameField />
-          <GameStats />
         </div>
+        <GameStats className="statistic" />
         <SaveRecordModal />
       </div>
     </GameProvider>
@@ -32,8 +50,33 @@ const GameContainer = ({ className }) => {
 };
 
 export const Game = styled(GameContainer)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .dif {
+    margin-top: 12px;
+    font-size: 40px;
+  }
+
+  .navigate {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    width: 234px;
+  }
+
+  .statistic {
+    right: 200px;
+  }
+
   .row {
     display: flex;
     justify-content: space-around;
+  }
+
+  .image {
+    &:hover {
+      cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+    }
   }
 `;

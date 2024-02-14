@@ -19,7 +19,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-image: repeating-conic-gradient(#d4d4d4 0% 25%, #ffffff 0% 50%);
   background-position: 0 0, 36px 36px;
-  background-size: 12px 12px;
+  background-size: 6px 6px;
   background-color: #ffffff;
 }
 
