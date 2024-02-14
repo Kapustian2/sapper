@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.db3f368e.css",
+    "main.js": "/static/js/main.d883136b.js",
+    "static/media/EpilepsySans.ttf": "/static/media/EpilepsySans.88a54509a9c5bfc72e7d.ttf",
+    "static/media/EpilepsySansBold.ttf": "/static/media/EpilepsySansBold.894973ffccf12e6789cb.ttf",
+    "index.html": "/index.html",
+    "main.db3f368e.css.map": "/static/css/main.db3f368e.css.map",
+    "main.d883136b.js.map": "/static/js/main.d883136b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db3f368e.css",
+    "static/js/main.d883136b.js"
+  ]
+}
