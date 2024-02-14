@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/sapper/static/css/main.30b1cc85.css",
-    "main.js": "/sapper/static/js/main.420563c4.js",
+    "main.js": "/sapper/static/js/main.bc077001.js",
     "static/media/EpilepsySans.ttf": "/sapper/static/media/EpilepsySans.88a54509a9c5bfc72e7d.ttf",
     "static/media/EpilepsySansBold.ttf": "/sapper/static/media/EpilepsySansBold.894973ffccf12e6789cb.ttf",
     "index.html": "/sapper/index.html",
     "main.30b1cc85.css.map": "/sapper/static/css/main.30b1cc85.css.map",
-    "main.420563c4.js.map": "/sapper/static/js/main.420563c4.js.map"
+    "main.bc077001.js.map": "/sapper/static/js/main.bc077001.js.map"
   },
   "entrypoints": [
     "static/css/main.30b1cc85.css",
-    "static/js/main.420563c4.js"
+    "static/js/main.bc077001.js"
   ]
 }
