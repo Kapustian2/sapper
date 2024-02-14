@@ -2,7 +2,7 @@ import React from "react";
 import { GameField, GameStats, SaveRecordModal } from "./components";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { ButtonUI } from "../../components";
+import { ButtonDif } from "../../components";
 import { GameProvider } from "./contexts/gameContext/index.tsx";
 
 const GameContainer = ({ className }) => {
@@ -16,10 +16,10 @@ const GameContainer = ({ className }) => {
         <div>Сложность:</div>
         <div> {difficulty}</div>
         <div>
-          <ButtonUI onClick={() => navigate(-1)}>Возврат</ButtonUI>
-          <ButtonUI onClick={() => window.location.reload()}>
+          <ButtonDif onClick={() => navigate(-1)}>Возврат</ButtonDif>
+          <ButtonDif onClick={() => window.location.reload()}>
             Перезапуск
-          </ButtonUI>
+          </ButtonDif>
         </div>
         <div className="row">
           <GameField />

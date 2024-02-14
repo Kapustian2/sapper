@@ -1,1 +1,1 @@
-export * from "./button-UI/button-UI.tsx";
+export * from "./buttons-UI/button-dif.tsx";

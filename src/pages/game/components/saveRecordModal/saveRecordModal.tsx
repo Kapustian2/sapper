@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useGame } from "../../contexts/gameContext/index.tsx";
 import styled from "styled-components";
-import { ButtonUI } from "../../../../components/index.js";
+import { ButtonDif } from "../../../../components/index.js";
 import { useDispatch } from "react-redux";
 import { setRecord } from "../../../../actions/setRecord.js";
 import { useParams } from "react-router-dom";
@@ -50,8 +50,8 @@ const SaveRecordModalContainer = ({ className }) => {
               autoComplete="false"
               onChange={(e) => setUsername(e.target.value)}
             />
-            <ButtonUI onClick={handleSubmit}>Отправить</ButtonUI>
-            <ButtonUI onClick={handleAbort}>Отменить</ButtonUI>
+            <ButtonDif onClick={handleSubmit}>Отправить</ButtonDif>
+            <ButtonDif onClick={handleAbort}>Отменить</ButtonDif>
             <div></div>
           </div>
         </div>
